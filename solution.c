@@ -1,131 +1,118 @@
-
 #include <stdio.h>
+#include <stdlib.h>
 #include <sys/types.h>
 #include <dirent.h>
 #include <string.h>
-#include <stdlib.h>
 
-#define MAX_WAYS 200
-#define WAY_SIZE 1000
-#define MAX_TOKENS 200
+#define SIZE 20
 
-//Считываем из текстового файла строку
-char *get_file_info(const char *way_buff, int *file_size){
-    
-    FILE *file=fopen(way_buff,"rt"); //открываем файл для чтения
-    //находим размер файла
-    fseek(file,0, SEEK_END);
-    *file_size = ftell(file);
-    fseek(file,0, SEEK_SET);
-    //выделяем память по строку
-    char *str=(char*)malloc(sizeof(char)*(*file_size));
-    //считываем информацию в строку
-    fread(str, 1, *file_size, file);
-    //закрываем файл
-    fclose(file);
-    return str;
-}
-
-
-//Обход директории в поиске файла, содержащего слово Minotaur, возвращает длину пути до этого файла
-int search_minotaur(char *new_way, char *start_dir, char* file_name, char **all_ways)
+typedef struct Path //объявляем структуру, в которую будем записывать пути до файлов
 {
-    char way_buff[WAY_SIZE];   //временный буфер
-    int length_way=0;       //Длина пути
-    strcpy(way_buff,new_way);       //Запись пути для дальнейшего использования и изменения
+    char** array;
+    int count;
+}Path;
 
-    DIR *dir = opendir(way_buff);       //Открываем директорию
-    struct  dirent *file_info = readdir(dir);      //Читаем информацию о текущем файле в директории
-    while(file_info) //пока в директории не закончились файлы
-    {
-        //получаем текущий путь
-        int path_len = strlen(way_buff);
-        strcat(way_buff,"/");
-        strcat(way_buff,file_info->d_name);
-             
-
-        //ищем нужный файл
-        //если нужный файл это регулярный файл и его имя совпадает с искомым файлом   
-        if(file_info->d_type==DT_REG && !strcmp(file_info->d_name,file_name))
-        {
-            int number_of_tokens = 0;
-           int file_size = 0;
-            //считываем строку из файла
-            char *str=get_file_info(way_buff,&file_size);
-            //разбиваем строку на лексемы
-            char tokens_arr[MAX_TOKENS][file_size];     //массив лексем
-            //разбиваем строку на лексемы
-            char *item=strtok(str," \n");  //указатель на текущую лексему  
-            while(item!=NULL)
-            {
-                strcpy(tokens_arr[number_of_tokens++],item);
-                item=strtok(NULL," \n");
-            }
-                
-
-            //анализируем лексемы
-            int i;
-            for(i=0;i<number_of_tokens;i++)
-            { 
-                   
-
-                //если тупик, возвращаем длину пути
-                if(!strcmp(tokens_arr[i],"Deadlock")) return length_way;
-                    
-                //если файл-минотавр найден, запоминаем найденный путь
-                else if(!strcmp(tokens_arr[i],"Minotaur"))
-                {
-                    all_ways[length_way]=(char*)malloc(sizeof(char)*1000);
-                    strcpy(all_ways[length_way],way_buff);
-                    length_way=1;
-                    return length_way;
-                }
-
-                //если предыдущая лексема указывает на то, что данная лексема - название следующего файла, переходим к следующему файлу
-                else  if(!strcmp(tokens_arr[i-1],"@include"));
-                {
-                    length_way=search_minotaur(start_dir,start_dir,tokens_arr[i],all_ways);
-                    if(length_way!=0)
-                    {
-                        all_ways[length_way]=(char*)malloc(sizeof(char)*1000);
-                        strcpy(all_ways[length_way],way_buff);
-                        length_way++;
-                        return length_way;
-                    }
-                }
-            }
-        }
-
-
-        //если файл это директория (не родительская и не текущая), проверяем ее
-        if( file_info->d_type == DT_DIR && strcmp(".",file_info->d_name)!=0 && strcmp("..",file_info->d_name)!=0)
-        { 
-            length_way = search_minotaur(way_buff,start_dir,file_name,all_ways);
-        }
-
-        way_buff[path_len] = '\0'; //если слово не найдено, переходим к следующему файлу, очищаем последний найденный путь
-        file_info = readdir(dir);  
-    }
-    closedir(dir);
-    return length_way;
-}
-
-
-
-
-int main()
+int findMinotaur(const char *, char *, Path *); //функция поиска минотавра
+void print(Path ); //функция вывода пути к минотавру
+ 
+int main(int c, char **v, char **env )
 {
-    char *file_name="file.txt";     //файл, с которого начинаем поиск
-    char **all_ways=(char**)malloc(MAX_WAYS*sizeof(char*));     //Массив путей
-    int length_way=0;
-
-    //ищем пути к файлу-минотавру 
-    length_way=search_minotaur(".",".",file_name,all_ways);
-    //Вывод путей и очищение памяти
+    Path Pt;
+    Pt.array = (char **)malloc(SIZE*sizeof(char *));
     int i;
-    for(i=length_way-1;i>=0;i--){                       
-        printf("%s\n",all_ways[i]);
-        free(all_ways[i]);}
-    free(all_ways);
+    for (i = 0; i < SIZE; ++i)
+    {
+        (Pt.array)[i] = (char*)malloc(1000*sizeof(char));
+    }
+
+    Pt.count = 0;
+
+    if(c==2)
+    {
+        findMinotaur(v[1], "file.txt", &Pt);
+    } 
+    
+        else
+        {
+            findMinotaur(".","file.txt", &Pt);
+        }
+    print(Pt);
     return 0;
+}
+
+int findMinotaur(const char *startdir, char *filename, Path *Pt) //на вход подается корневая директория, указатель на название файла, который требуется найти и указатель на структуру
+{
+    int log = 0; //логическая переменная
+    char current_path[1000];
+    strcpy(current_path,startdir); //копируем стартовую директорию в строку
+ 
+    DIR *dir = opendir(current_path); //открываем директорию
+    struct  dirent *de = readdir(dir); //создаем структру, считываем директорию
+ 
+    if(dir && !log) //если директория не пуста
+        while(de)
+        { 
+         if( de->d_type == DT_DIR && 
+             0!=strcmp(".",de->d_name) && 0!=strcmp("..",de->d_name)) //определяем, является ли папкой, при этом не текущей и не вышестоящей
+            { 
+                int path_len = strlen(current_path);
+                strcat(strcat(current_path,"/"),de->d_name); //записываем в конец текущего пути / и имя папки
+                log += findMinotaur(current_path, filename, Pt); 
+                current_path[path_len] = '\0';
+            }
+
+            if (de->d_type == DT_REG && !strcmp(de->d_name, filename)) //проверяем, является ли файлом, и сравнием названия файлов
+            {
+                strcat(strcat(current_path,"/"),de->d_name);//записываем в конец текущего пути / и имя файла
+                FILE *f = fopen(current_path, "r");//открываем файл на чтение
+                char *str = (char *)malloc(51);
+                fgets(str, 50, f);
+                if (strstr(str, "Minotaur")) //определяем, является ли содержимое файла минотавром
+                {
+                    strcpy((Pt->array)[Pt->count], current_path); //копируем путь к нему
+                    Pt->count++;
+
+                    return 1;
+                }
+                else
+                {
+                    if (strstr(str, "Deadlock")) //если тупик
+                    {
+                        if (Pt->count) Pt->count--;
+                        return 0;
+                    }
+                    else
+                    {
+                        while(strstr(str, "\n")>0) //пока не дойдем до пустой строки
+                        {
+                            strcpy((Pt->array)[Pt->count], current_path);
+                            Pt->count++;
+                            char *obj = strtok(str," \n");
+                            obj = strtok(NULL, " \n"); //разбиваем содержимое строки 
+                            log += findMinotaur(".", obj, Pt); //ищем минотавра 
+                            if (!log) //если его не оказалось
+                                {
+                                    fgets(str, 50, f); //считываем следующую строку файла
+                                }
+                            else 
+                            return 1;
+                        }
+                    }       
+                }
+            }
+            de = readdir(dir);
+        }
+    closedir(dir);//закрываем директорию
+    return log;
+}
+
+void print(Path Pt)
+{
+    FILE* f=fopen("result.txt", "w");
+    int i;
+    for(i=0; i<Pt.count; i++)
+    {
+        fprintf(f, "%s\n", (Pt.array)[i]); //выводим путь
+    }
+    fclose(f);
 }
