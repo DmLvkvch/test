@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cstring>
- 
+ #include <string>
 using namespace std;
  
  
@@ -116,15 +116,14 @@ void PostfixNotation(const char *_infix, char *_postfix)
     _postfix[out_index] = 0;
 }
 
-void tree(string str, Node* s) {
+void tree(string str, Node* s, int i) {
 	s->right=new Node;
-	s->right=new Node;
-	int i = str.size()-1;
+	s->left=new Node;
+	s->value=str[i];
 	if(i==0)
 		return;
-	s->value=str[i];
-	tree(str.substr(0,i--), s->left);	
-	tree(str.substr(0,i--), s->right);
+	tree(str, s->left,i-1);
+	tree(str, s->right,i-1);	
 	return;
 }
  
@@ -140,7 +139,7 @@ char pop(char *_stack, int &_ptr)
  
  void infix( Node* node){
 	if(node==NULL)
-	return;
+		return;
 	cout<<node->value;
 	infix(node->left);
 	infix(node->right);
@@ -148,14 +147,16 @@ char pop(char *_stack, int &_ptr)
 int main()
 {
 Node *node=new Node;
+
     char str_infix[] = "(2+2)*3+5*(5+3)";
     char str_postfix[MAX_LEN];
     char result[MAX_LEN];
     cout << str_infix << endl;
     PostfixNotation(str_infix, str_postfix);
-string str = str_postfix;
-    cout << str << endl;
-tree(str, node);
+	string str = str_postfix;
+	int i = str.length()-1;
+	    cout << str << endl;
+	tree(str, node, i);
 	infix(node);
     return 0;
 }
