@@ -1,38 +1,37 @@
 #include <iostream>
 #include <cstring>
- #include <string>
+#include <sstream>
+#include <cstdlib>
+#include <fstream>
+#include <exception>
+#include <cctype>
 using namespace std;
- 
- 
+
+
 #define MAX_LEN 256
 char stack[MAX_LEN];    // стек для хранения операторов при преобразовании
 int st_ptr = 0;             // указатель вершины стека
- struct Node;
 void push(char *_stack, int &_ptr, char data);
 char pop(char *_stack, int &_ptr);
-struct Node{
-	char value;
-	Node* right;
-	Node* left;
-};
+
 //
 //  Преобразование записи математ. выражения из инфиксной в постфиксную (в обратную польскую запись)
 //
 //  Сразу оговоримся, допустимые операторы: +,-,*,/,(,),^; все операции будем считать лево-ассоциативными
 //  Все операнды - односимвольные
 //
-void PostfixNotation(const char *_infix, char *_postfix)
+string PostfixNotation(string _infix, char *_postfix)
 {
- 
- 
+
+
     int out_index = 0;      // индекс в выходной строке
     int in_index = 0;       // индекс во входной строке
- 
+
     // начинаем разбор входящей строки (она не должна быть пустой)
     do
     {
         char c = _infix[in_index];  // берем текущий символ входной строки
- 
+
         switch (c)
         {
             case '+':
@@ -52,7 +51,7 @@ void PostfixNotation(const char *_infix, char *_postfix)
                 // помещаем оператор в стек
                 push(stack, st_ptr, c);
                 break;
- 
+
             case '*':
             case '/':
                 // выталкиваем из стека в выходную строку все операторы с большим или равным приоритетом
@@ -70,12 +69,12 @@ void PostfixNotation(const char *_infix, char *_postfix)
                 // помещаем оператор в стек
                 push(stack, st_ptr, c);
                 break;
- 
+
             case '(':
                 // просто помещаем в стек
                 push(stack, st_ptr, c);
                 break;
- 
+
             case ')':
                 // выталкиваем из стека в выходную строку все элементы до открывающей скобки (откр. скобку просто отбрасываем)
                 while (st_ptr != 0)
@@ -89,74 +88,314 @@ void PostfixNotation(const char *_infix, char *_postfix)
                     }
                 }
                 break;
- 
+
             case '^':
                 // помещаем оператор в стек (выталкивать ничего не нужно, нет операторов с большим приоритетом)
                 push(stack, st_ptr, c);
                 break;
- 
+
             default:        // символ цифры
                 _postfix[out_index] = c;    // добавляем цифру в выходную строку
                 out_index++;
                 break;
         }
- 
+
         in_index++; // переходим к следующему символу входной строки
     }
     while (_infix[in_index] != 0);  // разбор закончен
- 
+
     // выталкиваем все операторы в выходную строку
     while(st_ptr != 0)
     {
         _postfix[out_index++] = pop(stack, st_ptr);
-        cout << st_ptr << endl;
+       // cout << st_ptr << endl;
     }
- 
+
     // завершающий символ нуля
-    _postfix[out_index] = 0;
+    _postfix[out_index] = '\0';
+    return _postfix;
 }
 
-void tree(string str, Node* s, int i) {
-	s->right=new Node;
-	s->left=new Node;
-	s->value=str[i];
-	if(i==0)
-		return;
-	tree(str, s->left,i-1);
-	tree(str, s->right,i-1);	
-	return;
-}
- 
 void push(char *_stack, int &_ptr, char data)
 {
     _stack[_ptr++] = data;
 }
- 
+
 char pop(char *_stack, int &_ptr)
 {
     return _stack[--_ptr];
 }
- 
- void infix( Node* node){
-	if(node==NULL)
-		return;
-	cout<<node->value;
-	infix(node->left);
-	infix(node->right);
+
+bool isOperator(char c){
+    if(c=='+'||c=='-'||c=='/'||c=='*'||c=='^')
+        return true;
+    else
+        return false;
 }
+
+struct BinTree  //Тип узла дерева.
+{
+  char Key; //Символ.
+  BinTree* Left;
+  BinTree* Right;
+};
+
+struct zveno  //Тип звена стека.
+{
+  BinTree* Element; //Символ.
+  zveno* Sled;
+};
+
+class Tree
+{
+  private:
+    BinTree *Root; //Указатель на корень дерева.
+    zveno *Stack;
+  public:
+    Tree();
+    void Delete (BinTree **);
+    void V_stack (BinTree*);
+    void Print_Tree_Left (BinTree*);
+    void Print_Tree_End (BinTree*);
+    void Print_Tree_Back (BinTree*);
+  //  void Print_Tree(BinTree*, char);
+    float Evalbintree(BinTree* T);
+    float Operation(char Symbol, float Operand_1, float Operand_2);
+    BinTree* GetTree() {return Root;};
+};
+
+void Print_Tree(BinTree*, char d);
+void Tree::V_stack (BinTree* Elem)
+{
+  zveno *q=new (zveno);
+
+  q->Element = Elem;
+  q->Sled = Stack;
+  Stack = q;
+}
+
+void Tree::Delete (BinTree** tmp)
+{
+  zveno *q;
+
+  if  (Stack!=nullptr)
+  {
+    (*tmp) = Stack->Element;
+    q = Stack;
+    Stack = Stack->Sled;
+    delete q;
+  }
+}
+
+void Tree::Print_Tree_Left (BinTree* w)
+//Левостоpонний обход бинаpного деpева.
+{
+  if  (w!=nullptr)
+  {
+    cout << w->Key << " ";
+    Print_Tree_Left (w->Left);
+    Print_Tree_Left (w->Right);
+  }
+}
+
+void Tree::Print_Tree_End (BinTree* w)
+//Концевой обход бинаpного деpева.
+{
+  if  (w!=nullptr)
+  {
+    Print_Tree_End (w->Left);
+    Print_Tree_End (w->Right);
+    cout << w->Key<<" ";
+  }
+}
+
+void Tree::Print_Tree_Back (BinTree* w)
+//Обpатный обход бинаpного деpева.
+{
+  if  (w!=nullptr)
+  {
+    Print_Tree_Back (w->Left);
+    cout << w->Key<<" ";
+    Print_Tree_Back (w->Right);
+  }
+}
+
+float Tree::Operation (char Symbol, float Operand_1, float Operand_2)
+{
+  float temp;
+
+  switch (Symbol)
+  {
+    case '+': temp = Operand_1 + Operand_2; break;
+    case '-': temp = Operand_1 - Operand_2; break;
+    case '*': temp = Operand_1 * Operand_2; break;
+    case '/': temp = Operand_1 / Operand_2; break;
+  }
+  return temp;
+}
+
+float Tree::Evalbintree (BinTree *T)
+{
+  float opnd1,opnd2,rez=0;
+  char  symb,tmp[2];
+
+  tmp[1]='\0';
+
+  if (T!=nullptr)
+  {
+     if (strchr("+-*",T->Key)!=nullptr)
+     {
+           opnd1 = Evalbintree (T->Left);
+           opnd2 = Evalbintree (T->Right);
+           symb  = T->Key;
+           rez =  Operation (symb,opnd1,opnd2);
+     }
+     else
+     {
+           tmp[0] = T->Key;
+           rez = stoi (tmp);
+     }
+  return rez;
+  }
+}
+
+Tree::Tree()
+{
+  Stack = nullptr;  //Вначале опустошим стек.
+  //Фоpмиpование заглавного звена деpева.
+  Root = new (BinTree);
+  Root->Right = nullptr;
+}
+
+string strrev(string str){
+    char str1[100];
+    int k = 0;
+    for(int i = str.size()-1;i>=0;i--){
+        str1[k]=str[i];
+        k++;
+    }
+    str1[k]='\0';
+    string res=str1;
+    return res;
+}
+
+void Print_Tree (BinTree* w, char d)
+{
+  if  (w!=nullptr)
+  {
+	    Print_Tree (w->Left, d);
+	    Print_Tree (w->Right, d);
+
+	if(isalpha(w->Key))
+		w->Key=d;
+
+    	cout << w->Key<<" ";
+	
+  }
+}
+
+string qwerty(string str, char d){
+	for(int i = 0;i<str.size();i++){
+	if(isalpha(str[i]))
+		str[i]=d;
+	}
+return str;
+}
+
+void Print_Tree (BinTree* w, char d);
+void print(string str)
+{
+  char k; //Вспомогательная пеpеменная.
+  BinTree* s=nullptr;
+  str = strrev (str);
+  Tree A;
+  BinTree* Temp = A.GetTree(); //Текущий указатель.
+  for(int i=0;i<str.size();i++)
+  {
+    k = str[i];
+    //Пеpеходим к анализу символа k.
+    if  (strchr("+-*/^",k)!=nullptr)
+    { //Символ - опеpация.
+      if (Temp->Right==nullptr) //Отсутствует пpавая дуга.
+      {
+        //Резеpвиpование места для вставляемого узла.
+        Temp->Right = new (BinTree);
+        // Установка указателя на вставляемый узел.
+        Temp = Temp->Right;
+        //Инициализация вставляемого узла.
+        Temp->Key = k;
+
+        Temp->Left = Temp->Right = nullptr;
+        //Ссылка на пpедыдущий узел --> стек.
+        A.V_stack (Temp);
+       }
+       else //Есть пpавая дуга.
+       { //Резеpвиpование места для вставляемого узла.
+         Temp->Left = new (BinTree);
+         // Установка указателя на вставляемый узел.
+         Temp = Temp->Left;
+         // Инициализация вставляемого узла.
+         Temp->Key = k;
+         Temp->Left = Temp->Right = nullptr;
+         //Ссылка на пpедыдущий узел --> стек.
+         A.V_stack (Temp);
+       }
+    }
+    else //Символ - опеpанд.
+     if (Temp->Right==nullptr) //Отсутствует пpавая дуга.
+     {
+       //Резеpвиpование места для вставляемого узла.
+       Temp->Right = new (BinTree);
+       // Установка указателя на вставляемый узел.
+       Temp = Temp->Right;
+       //Инициализация вставляемого узла.
+       Temp->Key = k;
+       Temp->Left = Temp->Right = nullptr;
+       // Текущий указатель "возвpащается" назад.
+       A.Delete (&s);
+       Temp = s;
+     }
+     else   //Есть пpавая дуга.
+     { //Резеpвиpование места для вставляемого узла.
+       Temp->Left = new (BinTree);
+       // Установка указателя на вставляемый узел.
+       Temp = Temp->Left;
+       // Инициализация вставляемого узла.
+       Temp->Key = k;
+       Temp->Left = Temp->Right = nullptr;
+       // Текущий указатель "возвpащается" назад.
+       A.Delete (&s);
+       Temp = s;
+     }
+  } //Конец for.
+  cout << "Пеpед Вами фоpмула, записанная в инфиксной фоpме...\n";
+  A.Print_Tree_Back (A.GetTree()->Right);
+  cout << endl;
+  cout << "------------------------------------------ \n";
+  cout << "Пеpед Вами фоpмула, записанная в пpефиксной фоpме...\n";
+  A.Print_Tree_Left (A.GetTree()->Right);
+  cout << endl;
+  cout << "------------------------------------------ \n";
+  cout << "Пеpед Вами фоpмула, записанная в постфиксной фоpме...\n";
+  A.Print_Tree_End (A.GetTree()->Right);
+	char d;
+	cout<<"CHAR"<<endl;
+	cin>>d;
+	Print_Tree(A.GetTree()->Right, d);
+  cout<<"\nЗначение выражения:"<<A.Evalbintree(A.GetTree()->Right)<<endl;
+
+
+}
+
+
+
 int main()
 {
-Node *node=new Node;
 
-    char str_infix[] = "(2+2)*3+5*(5+3)";
+    string str_infix;
+    getline(cin, str_infix);
     char str_postfix[MAX_LEN];
-    char result[MAX_LEN];
-    cout << str_infix << endl;
-    PostfixNotation(str_infix, str_postfix);
-	string str = str_postfix;
-	int i = str.length()-1;
-	    cout << str << endl;
-	tree(str, node, i);
-	infix(node);
+    string str = PostfixNotation(str_infix, str_postfix);
+    print(str);
     return 0;
 }
