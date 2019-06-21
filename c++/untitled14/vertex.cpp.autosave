@@ -1,0 +1,20 @@
+#include "vertex.h"
+#include <QString>
+
+Vertex::Vertex()
+{
+}
+
+void Vertex::addCity(QString name, QString road, QString park){
+    this->name = name;
+    if(road=="ground")
+        this->type={1};
+    else if(road=="water")
+        this->type = {2};
+    else
+        this->type={3};
+    if(park=="yes")
+        this->parking={true};
+    else
+        this->parking = {false};
+}
