@@ -9,6 +9,7 @@ public class Graph {
     private int ECount = 0;
     private HashMap<Integer, Vertex> graph = new HashMap<>();//список смежности
     private LinkedList<Integer> vertexes = new LinkedList<>();
+
     public Graph(){}
 
     public void addV(int v){
@@ -43,14 +44,15 @@ public class Graph {
             VCount--;
         }
         else
-            return;
+            throw new RuntimeException("Vertex "+v+" doesn't exists");
     }
 
     public void removeE(int v1, int v2){
         if(!vertexes.contains(v1))
-            return;
-        if(!vertexes.contains(v2))
-            return;
+            throw new RuntimeException("Vertex "+v1+" doesn't exists");
+        if(!vertexes.contains(v2)){
+            throw new RuntimeException("Vertex "+v2+" doesn't exists");
+        }
         graph.get(v1).way.remove((Integer)v2);
     }
 
@@ -86,9 +88,4 @@ public class Graph {
     public Vertex checkV(int v){
         return graph.get(v);
     }
-
-    public int EdgesAtVertex(int v){
-        return graph.get(v).way.size();
-    }
-
 }
