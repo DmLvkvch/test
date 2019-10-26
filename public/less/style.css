@@ -1,0 +1,231 @@
+body {
+  background-color: cadetblue;
+}
+h1 {
+  font-family: "Lucida Bright";
+}
+.rounded {
+  counter-reset: li;
+  list-style: none;
+  font: 14px "Trebuchet MS", "Lucida Sans";
+  padding: 0;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+  margin-top: auto;
+  width: min-content;
+}
+li {
+  width: available;
+  display: block;
+}
+.rounded a {
+  position: relative;
+  display: block;
+  padding: 0.4em 0.4em 0.4em 3em;
+  width: 10em;
+  margin: 1.5em 0;
+  background: #DAD2CA;
+  color: #444;
+  text-decoration: none;
+  border-radius: 0.3em;
+  transition: 0.3s ease-out;
+}
+.rounded a:hover {
+  background: #E9E4E0;
+}
+.rounded a:hover:before {
+  transform: rotate(360deg);
+}
+.rounded a:before {
+  content: counter(li);
+  counter-increment: li;
+  position: absolute;
+  left: -0.5em;
+  top: 50%;
+  margin-top: -1.3em;
+  background: #8FD4C1;
+  height: 2em;
+  width: 2em;
+  line-height: 2em;
+  border: 0.3em solid white;
+  text-align: center;
+  font-weight: bold;
+  border-radius: 2em;
+  transition: all 0.3s ease-out;
+}
+a {
+  display: inline-block;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 14px;
+  font-weight: bold;
+  font-family: 'Montserrat', sans-serif;
+  transition: 0.4s ease-in-out;
+  color: black;
+}
+.lk a {
+  border-radius: 10px;
+  color: #36454A;
+  background: -webkit-linear-gradient(top, #A4D3E0, #A4D3E0 50%, #CBE3EB 50%);
+  background: -o-linear-gradient(top, #A4D3E0, #A4D3E0 50%, #CBE3EB 50%);
+  background: linear-gradient(to top, #A4D3E0, #A4D3E0 50%, #CBE3EB 50%);
+  box-shadow: 2px 2px 3px black;
+}
+.lk a:hover {
+  background: -webkit-linear-gradient(bottom, #A4D3E0, #A4D3E0 50%, #CBE3EB 50%);
+  background: -o-linear-gradient(bottom, #A4D3E0, #A4D3E0 50%, #CBE3EB 50%);
+  background: linear-gradient(to bottom, #A4D3E0, #A4D3E0 50%, #CBE3EB 50%);
+}
+.railway {
+  border-radius: 10px;
+  max-width: 350px;
+  padding: 20px;
+  background: #FAAB1B;
+  font-family: 'Oswald', sans-serif;
+}
+.railway h1 {
+  padding: 7px;
+  margin-bottom: 20px;
+  text-align: center;
+  line-height: 1;
+  text-transform: uppercase;
+  color: #FAAB1B;
+  background: #291810;
+}
+.addForm {
+  border-radius: 10px;
+  margin-bottom: 20px;
+  padding: 10px;
+  background: #291810;
+}
+.addForm input,
+.addForm label,
+.addForm textarea,
+.addForm select {
+  border-radius: 10px;
+  display: block;
+  width: 100%;
+}
+.addForm input {
+  padding: 0;
+  line-height: 30px;
+  background: #FAAB1B;
+  border-width: 0;
+}
+.addForm label {
+  margin-bottom: 5px;
+  color: #FAAB1B;
+  text-transform: uppercase;
+  font-size: 12px;
+}
+.addForm select {
+  padding: 0;
+  line-height: 30px;
+  background: #FAAB1B;
+  border-width: 0;
+}
+button {
+  margin-top: 1%;
+  border-radius: 10px;
+}
+.edit1 {
+  display: none;
+  /* Скрыто по умолчанию */
+  background-color: #000000;
+  /* Затемнение фона */
+  background-color: rgba(0, 0, 0, 0);
+  /* Полупрозрачное затемнение */
+  z-index: 1;
+  /* Фон на нижнем слое */
+}
+.takeMdl {
+  position: absolute;
+  margin-left: 25%;
+  margin-top: -7%;
+  display: none;
+  /* Скрыто по умолчанию */
+  background-color: #000000;
+  /* Затемнение фона */
+  background-color: rgba(0, 0, 0, 0);
+  /* Полупрозрачное затемнение */
+  z-index: 1;
+  /* Фон на нижнем слое */
+}
+.singletb {
+  margin-top: -5%;
+}
+img {
+  height: 400px;
+  width: 600px;
+  margin-left: 10%;
+}
+.paint {
+  display: inline-flex;
+  margin-top: -15%;
+  margin-left: 20%;
+}
+#parttble {
+  margin-left: 35%;
+  margin-top: -15%;
+}
+button {
+  font-weight: 700;
+  color: white;
+  text-decoration: none;
+  padding: 0.8em 1em calc(0.8em + 3px);
+  border-radius: 3px;
+  background: #40c781;
+  box-shadow: 0 -3px #35a76e inset;
+  transition: 0.2s;
+}
+button:hover {
+  background: #35a76e;
+}
+button:active {
+  background: #21935a;
+  box-shadow: 0 3px #21935a inset;
+}
+.buttons {
+  margin-left: 60px;
+  display: compact;
+}
+.2bt {
+  display: none;
+}
+#addPic {
+  display: none;
+  margin-left: 70%;
+  margin-top: -17%;
+}
+.map {
+  alignment: center;
+  margin-left: 40%;
+  margin-top: -25em;
+}
+#tble {
+  margin-left: 35%;
+  margin-top: -15%;
+}
+#butaddPic {
+  margin-left: 33%;
+  margin-top: 1%;
+}
+#partedit {
+  margin-left: 20%;
+}
+#sets {
+  margin-top: -17%;
+}
+#addPartmod {
+  margin-left: 60%;
+}
+#file1 {
+  display: none;
+}
+#addPart {
+  margin-left: 32%;
+}
+#addPartmod {
+  display: none;
+}
+/*# sourceMappingURL=style.css.map */

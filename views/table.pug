@@ -1,0 +1,17 @@
+table(id='tble')
+    tr(id="tableHeader" class = "w3-green")
+        thead
+            td
+                h1 Name
+            td
+                h1 Author
+            td
+                h1 Date
+    -for(let i = 0; i<paintings.length;i++)
+        tr(data-href='https://localhost:3000/paint/'+i)
+            td #{paintings[i].name}
+            td #{paintings[i].author}
+            td #{paintings[i].date}
+div(class = 'buttons')
+    button(class='addPic' id='butaddPic') Add picture
+include addPic

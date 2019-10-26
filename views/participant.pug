@@ -1,0 +1,39 @@
+html
+    head
+        style
+            include ../public/less/style.css
+        script(src="https://api-maps.yandex.ru/2.1/?apikey=1c6d2703-b956-4857-aa4e-728503eb5b17&lang=ru_RU")
+        script
+            include ../node_modules/jquery/dist/jquery.min.js
+            include ../public/src/jqr.js
+        script
+            |   initMap(#{x.coord.x}, #{x.coord.y})
+    body
+        include links
+        div(class = 'paint')
+            div(align='left' class = 'info')
+                div(class='railway')
+                    div(class="addForm")
+                        p
+                            label Name
+                            input(class = 'edit' type='text' value=x["name"] readonly=true)
+                        p
+                            label Location
+                            input(class = 'edit' type='text' value=x["location"] readonly=true)
+                        p
+                            label In auction
+                            select(class = 'edit' disabled=true id='select')
+                                option Yes
+                                option No
+                        p
+                            label Latitude
+                            input(class = 'edit' type='text' value=x.coord.x readonly=true)
+                        p
+                            label Longitude
+                            input(class = 'edit' type='text' value=x.coord.y readonly=true)
+                    div(class='edit1' align='center')
+                        button(class='parteditY') Yes
+                        button(class='editN') Cancel
+        div(id="map" style="width: 600px; height: 400px" class='map')
+        button(id='partedit') Edit
+

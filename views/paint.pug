@@ -1,0 +1,43 @@
+html
+    head
+        style
+            include ../public/less/style.css
+        script
+            include ../node_modules/jquery/dist/jquery.min.js
+            include ../public/src/jqr.js
+    body
+        include links
+        div(class = 'paint')
+            div(align='left' class = 'info')
+                div(class='railway')
+                    div(class="addForm")
+                        p
+                            label Name
+                            input(class = 'edit' type='text' value=x.name readonly=true)
+                        p
+                            label Author
+                            input(class = 'edit' type='text' value=x["author"] readonly=true)
+                        p
+                            label Date
+                            input(class = 'edit' type='text' value=x["date"] readonly=true)
+                        p
+                            label Description
+                            input(class = 'edit' type='text' value=x["description"] placeholder='yyyy' readonly=true)
+                        p
+                            label In auction
+                            select(class='edit' disabled=true id='select')
+                                option Yes
+                                option No
+                        p
+                            input(class='edit' type='file' name='file' id='file1')
+                    div(class='edit1' align='center')
+                        button(class='editY') Yes
+                        button(class='editN') Cancel
+            div(align='center')
+                img.image(src = 'https://localhost:3000/'+x["img"])
+                div(class = 'buttons' align='center')
+                    button(class='editP') Edit picture
+                    |
+                    button(class='deleteP' id='deleteP') Delete picture
+script
+    include ../public/src/jqr.js
