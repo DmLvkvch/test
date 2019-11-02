@@ -1,0 +1,38 @@
+script
+    include ../public/src/jqr.js
+div(class = 'paint' id='sets')
+    div(align='left' class = 'info')
+        div(class='railway')
+            div(class="addForm")
+                -console.log(JSON.stringify(x))
+                -if(x!==undefined)
+                    p
+                        label Date
+                        input(class = 'edit' type='text' value=x['date'] readonly=true)
+                    p
+                        label Time
+                        input(class = 'edit' type='text' value=x["time"] readonly=true)
+                    p
+                        label Time out
+                        input(class = 'edit' type='text' value=x["time_out"] readonly=true)
+                    p
+                        label Duration
+                        input(class = 'edit' type='text' value=x["duration"] readonly=true)
+                    p
+                        label Pause
+                        input(class = 'edit' type='text' value=x["pause"] readonly=true)
+                    p
+                        label Participants
+                        select(id='setsel1')
+                            -for(let i = 0;i<x.participants.length;i++)
+                                option #{x.participants[i].name}
+                    p
+                        label Paintings
+                        select(id='setsel2')
+                            -for(let i = 0;i<x.paintings.length;i++)
+                                option #{x.paintings[i].name}
+                div(class='edit1' align='center')
+                    button(class='seteditY') Yes
+                    button(class='editN') Cancel
+            button(id='editset') Edit
+
