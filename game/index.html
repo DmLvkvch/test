@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Game</title>
+</head>
+<body bgcolor="#f0f8ff">
+<div align="center" >
+    <form action="game.html" method="get">
+        <h3>Your name:</h3>
+        <input type="text" id="name">
+        <button type="submit" onclick=" return store()">Submit</button>
+        <script>
+            function store() {
+                if (document.getElementById('name').value === "") {
+                    alert("Enter the name!");
+                    return false;
+                } else localStorage.setItem('tetris.username', document.getElementById('name').value);
+                return true;
+            }
+        </script>
+        <script>
+            let user = localStorage.getItem("tetris.username");
+            if(user!='undefined')
+                document.getElementById('name').value = user;
+            else
+                document.getElementById('name').value = "";
+        </script>
+    </form>
+</div>
+</body>
+</html>
