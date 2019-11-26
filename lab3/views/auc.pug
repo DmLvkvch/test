@@ -1,0 +1,26 @@
+html
+    head
+        script(src="/socket.io/socket.io.js")
+        link( rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css")
+        style
+            include ../public/less/style.css
+            include ../public/less/table.css
+        script(src="https://api-maps.yandex.ru/2.1/?apikey=1c6d2703-b956-4857-aa4e-728503eb5b17&lang=ru_RU")
+        script
+            include ../node_modules/jquery/dist/jquery.min.js
+            include ../public/src/jqr.js
+            include ../public/src/admin.js
+        script( src="https://code.jquery.com/jquery-1.12.4.js")
+        script( src="https://code.jquery.com/ui/1.12.1/jquery-ui.js")
+    body
+        include links
+        div(id="mainchat")
+            p.time
+            p.end
+            p.cur
+            div(id="chat")
+                ul(id="messages")
+            form(action="")
+                input( id="m" placeholder="type your message here...")
+                button Send
+        include prts

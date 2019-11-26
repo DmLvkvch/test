@@ -1,0 +1,21 @@
+include template
+table(id='parttble')
+    tr(id="tableHeader" class = "w3-green")
+        thead
+            td
+                h1 Name
+            td
+                h1 Location
+        -if(participants!==undefined)
+            -for(let i = 0; i<participants.length;i++)
+                tr(part-href='http://localhost:3000/participant/'+i)
+                    td #{participants[i].name}
+                    td #{participants[i].location}
+div(class = 'buttons')
+    button(class='addPart' id='addPart') Add Part
+include addPart
+script
+    include ../public/src/jqr.js
+link( rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css")
+script( src="https://code.jquery.com/jquery-1.12.4.js")
+script( src="https://code.jquery.com/ui/1.12.1/jquery-ui.js")

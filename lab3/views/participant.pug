@@ -1,0 +1,62 @@
+html
+    head
+        script(src="/socket.io/socket.io.js")
+        link( rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css")
+        style
+            include ../public/less/style.css
+        script(src="https://api-maps.yandex.ru/2.1/?apikey=1c6d2703-b956-4857-aa4e-728503eb5b17&lang=ru_RU")
+        script
+            include ../node_modules/jquery/dist/jquery.min.js
+            include ../public/src/jqr.js
+        script( src="https://code.jquery.com/jquery-1.12.4.js")
+        script( src="https://code.jquery.com/ui/1.12.1/jquery-ui.js")
+        script
+            -if(x!==undefined)
+                |   initMap(#{x.coord.x}, #{x.coord.y})
+    body
+        include links
+        div(class = 'paint')
+            div(align='left' class = 'info')
+                div(class='railway')
+                    div(class="addForm")
+                        -if(x!==undefined)
+                            p
+                                label Name
+                                input(class = 'edit' type='text' value=x["name"] readonly=true)
+                            p
+                                label Location
+                                input(class = 'edit' type='text' value=x["location"] readonly=true)
+                            p
+                                label In auction
+                                select(class = 'edit' disabled=true id='select')
+                                    -if(x["inAuc"]==="Yes")
+                                        option Yes
+                                        option No
+                                    -else
+                                        option No
+                                        option Yes
+                            p
+                                label Latitude
+                                input(class = 'edit' type='text' value=x.coord.x readonly=true)
+                            p
+                                label Longitude
+                                input(class = 'edit' type='text' value=x.coord.y readonly=true)
+                            p
+                                label NetWorth
+                                input(class = 'edit' type='text' value=x.networth readonly=true)
+                            p
+                                table(class='qwe')
+                                    tr(class = "w3-green")
+                                        thead
+                                            td
+                                                h1 Paints
+                                        -if(x.paints.length>0)
+                                            -for(let i = 0; i<x.paints.length;i++)
+                                                tr(part-href=x.paints[i].x)
+                                                    td #{x.paints[i].y}
+                    div(class='edit1' align='center')
+                        button(class='parteditY') Yes
+                        button(class='editN') Cancel
+        div(id="map" style="width: 600px; height: 400px" class='map')
+        button(id='partedit') Edit
+        button(id='partdel') Delete

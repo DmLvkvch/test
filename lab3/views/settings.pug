@@ -1,0 +1,36 @@
+script
+    include ../public/src/jqr.js
+div(class = 'paint' id='sets')
+    div(align='left' class = 'info')
+        div(class='railway')
+            div(class="addForm")
+                -if(x!==undefined)
+                    table(cellpadding='5px' cellspacing='5px')
+                        tr
+                            td
+                                p
+                                    label Date
+                                    input(class = 'edit' type='text' value=x['date'] readonly=true)
+                            td
+                                p
+                                    label Time
+                                    input(class = 'edit' type='text' value=x["time"] readonly=true)
+                            td
+                                p
+                                    label Duration
+                                    input(class = 'edit' type='text' value=x["duration"] readonly=true)
+                            td
+                                p
+                                    label Participants
+                                    select(id='setsel1')
+                                        -for(let i = 0;i<x.participants.length;i++)
+                                            option #{x.participants[i].name}
+                                    label Paintings
+                                    select(id='setsel2')
+                                        -for(let i = 0;i<x.paintings.length;i++)
+                                            option #{x.paintings[i].name}
+                div(class='edit1')
+                    button(class='seteditY') Yes
+                    button(class='editN') Cancel
+            button(id='editset') Edit
+            button(id='start') Start auction
