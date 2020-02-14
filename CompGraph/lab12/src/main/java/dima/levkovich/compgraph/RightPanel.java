@@ -28,7 +28,7 @@ class RightPanel extends JPanel {
        // add(comboBoxWithPrimitives)
         JSlider sliderX = new JSlider(0, 600, 0);
         sliderX.addChangeListener(e -> {
-            int value = sliderX.getValue();
+            int value = 600 - sliderX.getValue();
             renderer.setScissor_x(value);
             gljPanel.repaint();
 
@@ -37,13 +37,13 @@ class RightPanel extends JPanel {
         add(sliderX);
         JSlider sliderY = new JSlider(0, 600, 0);
         sliderY.addChangeListener(e -> {
-            int value = sliderY.getValue();
+            int value = 600 - sliderY.getValue();
             renderer.setScissor_y(value);
             gljPanel.repaint();
 
         });
         add(sliderY);
-        JComboBox<String> jComboBoxAlpha = new JComboBox<>(Alpha.geAlpha());
+        JComboBox<String> jComboBoxAlpha = new JComboBox<>(Alpha.getAlpha());
         jComboBoxAlpha.addItemListener(e -> {
             if (e.getStateChange() == ItemEvent.SELECTED) {
                 String item = (String)e.getItem();
@@ -64,6 +64,32 @@ class RightPanel extends JPanel {
 
         });
         add(sliderAlpha);
+
+        JComboBox<String> jComboBoxSfactor = new JComboBox<>(Blend.getSfactor());
+        jComboBoxSfactor.addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                String item = (String)e.getItem();
+                // gljPanel.removeGLEventListener(renderer);
+                renderer.setSfactor(Blend.getCodeOfSfactor(item));
+                //gljPanel.addGLEventListener(renderer);
+                gljPanel.repaint();
+
+            }
+        });
+        add(jComboBoxSfactor);
+
+        JComboBox<String> jComboBoxDfactor = new JComboBox<>(Blend.getDfactor());
+        jComboBoxDfactor.addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                String item = (String)e.getItem();
+                // gljPanel.removeGLEventListener(renderer);
+                renderer.setDfactor(Blend.getCodeOfDfactor(item));
+                //gljPanel.addGLEventListener(renderer);
+                gljPanel.repaint();
+
+            }
+        });
+        add(jComboBoxDfactor);
     }
 
 }

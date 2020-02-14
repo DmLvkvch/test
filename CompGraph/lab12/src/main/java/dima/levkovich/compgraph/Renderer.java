@@ -6,10 +6,10 @@ import static com.jogamp.opengl.GL.*;
 
 public class Renderer implements GLEventListener {
     private int GLCode = GL2.GL_POINTS;
-    private int scissor_x = 0, scissor_y =0;
+    private int scissor_x = 600, scissor_y = 600;
     private int AlphaCode = GL_NEVER;
     private float AlphaParam = 0f;
-
+    private int sfactor = GL_ZERO, dfactor = GL_ZERO;
     Renderer(){
 
     }
@@ -19,6 +19,14 @@ public class Renderer implements GLEventListener {
 
     void setAlphaCode(int alphaCode) {
         AlphaCode = alphaCode;
+    }
+
+    public void setSfactor(int sfactor) {
+        this.sfactor = sfactor;
+    }
+
+    public void setDfactor(int dfactor) {
+        this.dfactor = dfactor;
     }
 
     public void init(GLAutoDrawable drawable) {
@@ -48,9 +56,10 @@ public class Renderer implements GLEventListener {
         gl2.glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         gl2.glScissor(0, 0, scissor_x, scissor_y);
         gl2.glEnable(GL2.GL_SCISSOR_TEST);
-        gl2.glEnable(GL2.GL_ALPHA_TEST);
         gl2.glAlphaFunc(AlphaCode, AlphaParam);
-        //gl2.glClear(GL_DEPTH_BUFFER_BIT);
+        gl2.glEnable(GL2.GL_ALPHA_TEST);
+        gl2.glEnable(GL_BLEND);
+        gl2.glBlendFunc(sfactor, dfactor);
         gl2.glPointSize(2);
         gl2.glBegin (GLCode);
         float x = 0.1f;
@@ -63,8 +72,8 @@ public class Renderer implements GLEventListener {
             gl2.glColor3f((float)1/(i+1),(float)2/(i+1),(float)3/(i+1));
             gl2.glVertex2f(x_, y_);
         }
-
         gl2.glEnd();
+        gl2.glEnable(GL_BLEND);
         gl2.glDisable(GL2.GL_ALPHA_TEST);
         gl2.glDisable(GL2.GL_SCISSOR_TEST);
         gl2.glFlush();

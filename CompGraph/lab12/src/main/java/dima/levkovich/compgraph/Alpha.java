@@ -21,7 +21,7 @@ class Alpha {
         map.put("GL_ALWAYS",GL2.GL_ALWAYS);
     }
 
-    static String[] geAlpha() {
+    static String[] getAlpha() {
         return list;
     }
 
