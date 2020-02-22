@@ -14,8 +14,6 @@ class MainWindow extends JFrame {
         contentPanel.setLayout(new GridBagLayout());
         final GLProfile glProfile = GLProfile.getDefault();
         GLCapabilities glCapabilities = new GLCapabilities(glProfile);
-        System.out.println("start");
-
         Renderer renderer = new Renderer();
         GLJPanel glJPanel = new GLJPanel(glCapabilities);
         glJPanel.addGLEventListener(renderer);

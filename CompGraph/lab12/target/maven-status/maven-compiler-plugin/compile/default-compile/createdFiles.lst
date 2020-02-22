@@ -1,1 +1,9 @@
 dima\levkovich\compgraph\App.class
+dima\levkovich\compgraph\Primitives.class
+dima\levkovich\compgraph\MainWindow.class
+dima\levkovich\compgraph\Alpha.class
+dima\levkovich\compgraph\Blend.class
+dima\levkovich\compgraph\Panel.class
+dima\levkovich\compgraph\RightPanel.class
+dima\levkovich\compgraph\Renderer.class
+dima\levkovich\compgraph\Run.class

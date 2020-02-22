@@ -10,13 +10,13 @@ class RightPanel extends JPanel {
     RightPanel(GLJPanel gljPanel, Renderer renderer){
         JComboBox<String> comboBoxWithPrimitives = new JComboBox<>(Primitives.getPrimitives());
         //add(label);
-       // this.setLayout(null);
+        // this.setLayout(null);
         this.setPreferredSize(new Dimension(230,700));
         setBackground(Color.blue);
         comboBoxWithPrimitives.addItemListener(e -> {
             if (e.getStateChange() == ItemEvent.SELECTED) {
                 String item = (String)e.getItem();
-               // gljPanel.removeGLEventListener(renderer);
+                // gljPanel.removeGLEventListener(renderer);
                 renderer.setGLCode(Primitives.getCodeOfPrimitive(item));
                 //gljPanel.addGLEventListener(renderer);
                 gljPanel.repaint();
@@ -25,7 +25,7 @@ class RightPanel extends JPanel {
         });
         add(comboBoxWithPrimitives);
 
-       // add(comboBoxWithPrimitives)
+        // add(comboBoxWithPrimitives)
         JSlider sliderX = new JSlider(0, 600, 0);
         sliderX.addChangeListener(e -> {
             int value = 600 - sliderX.getValue();
@@ -70,6 +70,7 @@ class RightPanel extends JPanel {
             if (e.getStateChange() == ItemEvent.SELECTED) {
                 String item = (String)e.getItem();
                 // gljPanel.removeGLEventListener(renderer);
+                System.out.println(Blend.getCodeOfSfactor(item));
                 renderer.setSfactor(Blend.getCodeOfSfactor(item));
                 //gljPanel.addGLEventListener(renderer);
                 gljPanel.repaint();
@@ -83,6 +84,7 @@ class RightPanel extends JPanel {
             if (e.getStateChange() == ItemEvent.SELECTED) {
                 String item = (String)e.getItem();
                 // gljPanel.removeGLEventListener(renderer);
+                System.out.println(Blend.getCodeOfDfactor(item));
                 renderer.setDfactor(Blend.getCodeOfDfactor(item));
                 //gljPanel.addGLEventListener(renderer);
                 gljPanel.repaint();
