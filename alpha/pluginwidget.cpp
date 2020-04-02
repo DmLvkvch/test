@@ -8,29 +8,23 @@
 #include <QPushButton>
 #include <QStyleOption>
 #include <iostream>
+
 PluginWidget::PluginWidget(QString name, QWidget* parent):QWidget(parent)
 {
+
+    this->plugin = new PluginIFace();
     this->widgetName = name;
     this->setWindowTitle(this->widgetName);
-    this->parentWidget = parent;
-    QGridLayout *grid = new QGridLayout();
+    grid = new QGridLayout();
+    initIFaces();
     setLayout(grid);
-    this->getConnectedIFaces().push_back(new IFace());
-    this->getConnectedIFaces().push_back(new IFace());
-    this->getConnectedIFaces().push_back(new IFace());
-    this->getConnectedIFaces().push_back(new IFace());
-    this->getConnectedIFaces().push_back(new IFace());
     openLogsButton = new QPushButton(this);
     openLogsButton->setText("Logs");
     openSettingsButton = new QPushButton(this);
     openSettingsButton->setIcon(QIcon("D:/Proxy/alpha/icons/gears-42.jpg"));
     openSettingsButton->setMaximumSize(50, 50);
-    QPushButton* new_window = new QPushButton();
-    new_window->setText("open in new window");
-    grid->addWidget(openLogsButton, 0, 0);
-    grid->addWidget(openSettingsButton, 1, 0);
-    grid->addWidget(new_window, 2, 0);
-    QObject::connect(new_window, SIGNAL(clicked()), this, SLOT(open_in_new_window()));
+    grid->addWidget(openLogsButton, 1, 0);
+    grid->addWidget(openSettingsButton, 1, 1);
     QObject::connect(openSettingsButton, SIGNAL(clicked()), this, SLOT(openSettingsButton_clicked()));
     QObject::connect(openLogsButton, SIGNAL(clicked()), this, SLOT(openLogsButton_clicked()));
 }
@@ -39,33 +33,43 @@ PluginWidget::~PluginWidget(){
 
 }
 
-QList<IFace*>& PluginWidget::getConnectedIFaces(){
-    return this->connectedIFaces;
-}
-
-void PluginWidget::open_in_new_window(){
-    setParent(nullptr);
-    this->show();
-}
-
 void PluginWidget::openLogsButton_clicked(){
-    LogsWidget *logs = new LogsWidget(this->getConnectedIFaces());
+    LogsWidget *logs = new LogsWidget(this->plugin->getConnectedIFaces());
     logs->show();
 }
 
 void PluginWidget::openSettingsButton_clicked(){
-    SettingsWidget *settings = new SettingsWidget(this->getConnectedIFaces());
+    SettingsWidget *settings = new SettingsWidget(this->plugin->getConnectedIFaces());
     settings->show();
+}
+
+void PluginWidget::initIFaces(){
+    QLabel *l;
+    QVBoxLayout *indicators = new QVBoxLayout;
+    for(int i = 0;i<this->plugin->getConnectedIFaces().size();i++){
+        QHBoxLayout *tmp = new QHBoxLayout;
+        l = new QLabel;
+        l->setFixedSize(10, 10);
+        l->setStyleSheet( "border-radius: 5px; background-color: red;" );
+        tmp->addWidget(l);
+        tmp->addWidget(new QLabel(this->plugin->getConnectedIFaces().at(i)->getName()));
+        indicators->addLayout(tmp);
+        QLabel *msgIn = new QLabel;
+        msgIn->setNum(0);
+        QLabel *msgOut = new QLabel;
+        msgOut->setNum(0);
+        tmp->addWidget(msgIn);
+        tmp->addWidget(msgOut);
+    }
+    grid->addLayout(indicators, 0, 0);
 }
 
 void PluginWidget::paintEvent(QPaintEvent * e)
 {
-    QPainter painter(this);
-    painter.drawRoundedRect(0,5,width()-5, height()-7,3,3);
-
     QWidget::paintEvent(e);
     QStyleOption opt;
     opt.init(this);
     QPainter p(this);
+     p.drawRoundedRect(0,5,width()-5, height()-7,3,3);
     style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
 }

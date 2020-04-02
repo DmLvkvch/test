@@ -2,13 +2,14 @@
 
 Settings::Settings()
 {
-
+    this->ip = "255.255.255.255";
+    this->port = 0;
 }
 
 QString Settings::getIp(){
     return this->ip;
 }
 
-QString Settings::getPort(){
+int Settings::getPort(){
     return this->port;
 }

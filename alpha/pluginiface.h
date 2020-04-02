@@ -14,11 +14,11 @@ class PluginIFace
 public:
     PluginIFace();
     QString name;
-    QList<IFace*> getConnectedIFaces;
+    QList<IFace*> & getConnectedIFaces();
     QString getVersion();
     void reset();
-    QList<Message> getMessageList();
-    QList<Settings> getSettings();
+    QList<Message> & getMessageList() const;
+    QList<Settings> & getSettings() const;
     void setSettings(QList<Settings> & settings);
 };
 

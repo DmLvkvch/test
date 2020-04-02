@@ -9,11 +9,11 @@ class Settings
 public:
     Settings();
     QString getIp();
-    QString getPort();
+    int getPort();
     //QString getName();
 private:
     QString ip;
-    QString port;
+    int port;
     QString name;
 };
 

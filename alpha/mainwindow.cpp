@@ -10,20 +10,22 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     QWidget * widget = new QWidget;
-    QVBoxLayout * layout = new QVBoxLayout;
-    PluginWidget * w = new PluginWidget("SCIF DIAG1",this);
-    PluginWidget * w1 = new PluginWidget("SCIF DIAG2",this);
-    PluginWidget * w2 = new PluginWidget("SCIF DIAG3",this);
-    PluginWidget * w3 = new PluginWidget("SCIF DIAG4",this);
-    PluginWidget * w4 = new PluginWidget("SCIF DIAG5",this);
-    PluginWidget * w5 = new PluginWidget("SCIF DIAG6",this);
-    layout->addWidget(w);
-    layout->addWidget(w1);
-    layout->addWidget(w2);
-    layout->addWidget(w3);
-    layout->addWidget(w4);
-    layout->addWidget(w5);
-    widget->setLayout(layout);
+    widgetsLayout = new QGridLayout();
+    listOfPlugins = new QList<PluginWidget*>();
+    listOfPlugins->push_back(new PluginWidget("SCIF DIAG1",this));
+    listOfPlugins->push_back(new PluginWidget("SCIF DIAG2",this));
+    listOfPlugins->push_back(new PluginWidget("SCIF DIAG3",this));
+    listOfPlugins->push_back(new PluginWidget("SCIF DIAG4",this));
+    listOfPlugins->push_back(new PluginWidget("SCIF DIAG5",this));
+    listOfPlugins->push_back(new PluginWidget("SCIF DIAG6",this));
+    int k = 0;
+    for(int i = 0;i<2;i++){
+        for(int j = 0;j<3;j++){
+            widgetsLayout->addWidget(listOfPlugins->at(k), i, j);
+            k++;
+        }
+    }
+    widget->setLayout(widgetsLayout);
     setCentralWidget(widget);
 }
 

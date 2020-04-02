@@ -2,10 +2,7 @@
 #define IFACE_H
 
 #include "settings.h"
-
 #include <QString>
-
-
 
 class IFace
 {

@@ -4,6 +4,7 @@
 #include "iface.h"
 #include "pluginiface.h"
 
+#include <QGridLayout>
 #include <QPushButton>
 #include <QWidget>
 
@@ -16,17 +17,19 @@ public:
     PluginWidget(QString name, QWidget *parent = nullptr);
     void paintEvent(QPaintEvent *event);
     virtual  ~PluginWidget();
-    QList<IFace*>& getConnectedIFaces();
 private slots:
-    void open_in_new_window();
     void openLogsButton_clicked();
     void openSettingsButton_clicked();
 private:
-    PluginIFace plugin;
+    QGridLayout *grid;
+    PluginIFace* plugin;
     QString widgetName;
-    QWidget* parentWidget;
+    QWidget* parentCustomWidget;
     QPushButton* openLogsButton;
     QPushButton* openSettingsButton;
     QList<IFace*> connectedIFaces;
+    void initIFaces();
+
 };
+
 #endif // PluginWidget_H

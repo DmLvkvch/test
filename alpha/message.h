@@ -15,7 +15,7 @@ private:
     MsgStatus status;
     long id;
     long priority;
-    QString data;
+    QString data = "21312312";
 };
 
 #endif // MESSAGE_H

@@ -26,12 +26,10 @@ void LogsWidget::init(){
 
 void LogsWidget::paintEvent(QPaintEvent * e)
 {
-    QPainter painter(this);
-    painter.drawRoundedRect(0,5,width()-5, height()-7,3,3);
-
     QWidget::paintEvent(e);
     QStyleOption opt;
     opt.init(this);
     QPainter p(this);
+    p.drawRoundedRect(0,5,width()-5, height()-7,3,3);
     style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
 }
