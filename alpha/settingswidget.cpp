@@ -6,12 +6,13 @@
 #include <QSpinBox>
 #include <QStyleOption>
 #include <QVBoxLayout>
-
+#include <iostream>
 SettingsWidget::SettingsWidget(QList<IFace*> & ifaces):QWidget(nullptr)
 {
     this->setWindowTitle("Settings");
     this->ifaces = ifaces;
     init();
+    QObject::connect(cancelButton, SIGNAL(clicked()), this, SLOT(cancelSettings()));
 }
 
 void SettingsWidget::init(){
@@ -20,27 +21,23 @@ void SettingsWidget::init(){
     cancelButton = new QPushButton(this);
     cancelButton->setText("cancel");
     QVBoxLayout *layout = new QVBoxLayout();
-    QVector<QLabel*> ifaceName;
-    QVector<QLineEdit*> ip;
-    QVector<QSpinBox*> port;
     QVBoxLayout *tmp = new QVBoxLayout();
     for (int i = 0;i<this->ifaces.size();i++) {
         QLabel* l = new QLabel;
         l->setText(ifaces[i]->getName());
-        ifaceName.push_back(l);
-        QLineEdit* le = new QLineEdit;
-        le->setText(ifaces[i]->getSettings().getIp());
-        ip.push_back(le);
-        ip[i]->setInputMask("000.000.000.000");
-        QSpinBox *spinBox = new QSpinBox();
-        spinBox->setRange(0, 65535);
-        spinBox->setValue(ifaces[i]->getSettings().getPort());
-        port.push_back(spinBox);
-        tmp->addWidget(ifaceName[i]);
-        tmp->addWidget(ip[i]);
-        tmp->addWidget(port[i]);
-        layout->addLayout(tmp);
+        tmp->addWidget(l);
+        QList<Settings> set = ifaces[i]->getSettings();
+        for (int j = 0;j<set.size();j++) {
+            QLabel* name = new QLabel;
+            QLineEdit* le = new QLineEdit;
+            name->setText(set[j].getName());
+            le->setText(set[j].getValue().toString());
+            tmp->addWidget(name);
+            tmp->addWidget(le);
+            layout->addLayout(tmp);
+        }
     }
+
     QHBoxLayout* buttonsLayout = new QHBoxLayout();
     buttonsLayout->addWidget(saveButton);
     buttonsLayout->addWidget(cancelButton);
@@ -64,5 +61,5 @@ void SettingsWidget::saveSettings(){
 
 
 void SettingsWidget::cancelSettings(){
-
+    this->close();
 }

@@ -14,7 +14,7 @@ class PluginWidget : public QWidget
     Q_OBJECT
 
 public:
-    PluginWidget(QString name, QWidget *parent = nullptr);
+    PluginWidget(PluginIFace* plugin, QString name, QWidget *parent = nullptr);
     void paintEvent(QPaintEvent *event);
     virtual  ~PluginWidget();
 private slots:

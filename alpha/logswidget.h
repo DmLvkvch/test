@@ -10,13 +10,12 @@ class LogsWidget: public QWidget
 {
     Q_OBJECT
 public:
-    LogsWidget(QList<IFace*> & ifaces);
+    LogsWidget(QList<Message> & listOfMessages);
     void paintEvent(QPaintEvent * e);
     void init();
 private:
-    QList<IFace*> ifaces;
+    QList<Message> listOfMessages;
     QTableWidget* table;
-
 };
 
 #endif // LOGSWIDGET_H

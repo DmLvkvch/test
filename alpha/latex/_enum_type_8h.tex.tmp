@@ -1,0 +1,60 @@
+\doxysection{Enum\+Type.\+h File Reference}
+\label{_enum_type_8h}\index{EnumType.h@{EnumType.h}}
+This graph shows which files directly or indirectly include this file\+:
+% FIG 0
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \textbf{ Type} \{ \textbf{ N\+O\+NE}, 
+\textbf{ IP}, 
+\textbf{ P\+O\+RT}
+ \}
+\item 
+enum \textbf{ Msg\+Status} \{ \textbf{ N\+ON}, 
+\textbf{ R\+E\+C\+E\+I\+V\+ED}, 
+\textbf{ S\+E\+N\+D\+ED}
+ \}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Enumeration Type Documentation}
+\mbox{\label{_enum_type_8h_ae93c88b0640d52689e459502d6ffdd0a}} 
+\index{EnumType.h@{EnumType.h}!MsgStatus@{MsgStatus}}
+\index{MsgStatus@{MsgStatus}!EnumType.h@{EnumType.h}}
+\doxysubsubsection{MsgStatus}
+{\footnotesize\ttfamily enum \textbf{ Msg\+Status}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{NON@{NON}!EnumType.h@{EnumType.h}}\index{EnumType.h@{EnumType.h}!NON@{NON}}}\mbox{\label{_enum_type_8h_ae93c88b0640d52689e459502d6ffdd0aa7905fcd753e9915a521ea77aa7066415}} 
+N\+ON&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RECEIVED@{RECEIVED}!EnumType.h@{EnumType.h}}\index{EnumType.h@{EnumType.h}!RECEIVED@{RECEIVED}}}\mbox{\label{_enum_type_8h_ae93c88b0640d52689e459502d6ffdd0aa1cf265da0334753368223d47f242a8df}} 
+R\+E\+C\+E\+I\+V\+ED&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SENDED@{SENDED}!EnumType.h@{EnumType.h}}\index{EnumType.h@{EnumType.h}!SENDED@{SENDED}}}\mbox{\label{_enum_type_8h_ae93c88b0640d52689e459502d6ffdd0aa16f0b4f7483314317e9e04e8595701eb}} 
+S\+E\+N\+D\+ED&\\
+\hline
+
+\end{DoxyEnumFields}
+\mbox{\label{_enum_type_8h_a1d1cfd8ffb84e947f82999c682b666a7}} 
+\index{EnumType.h@{EnumType.h}!Type@{Type}}
+\index{Type@{Type}!EnumType.h@{EnumType.h}}
+\doxysubsubsection{Type}
+{\footnotesize\ttfamily enum \textbf{ Type}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{NONE@{NONE}!EnumType.h@{EnumType.h}}\index{EnumType.h@{EnumType.h}!NONE@{NONE}}}\mbox{\label{_enum_type_8h_a1d1cfd8ffb84e947f82999c682b666a7ac157bdf0b85a40d2619cbc8bc1ae5fe2}} 
+N\+O\+NE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{IP@{IP}!EnumType.h@{EnumType.h}}\index{EnumType.h@{EnumType.h}!IP@{IP}}}\mbox{\label{_enum_type_8h_a1d1cfd8ffb84e947f82999c682b666a7a10cc4ee62c3f31579500254afec635db}} 
+IP&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PORT@{PORT}!EnumType.h@{EnumType.h}}\index{EnumType.h@{EnumType.h}!PORT@{PORT}}}\mbox{\label{_enum_type_8h_a1d1cfd8ffb84e947f82999c682b666a7a8268527d969e4ef493d3f35844a0b841}} 
+P\+O\+RT&\\
+\hline
+
+\end{DoxyEnumFields}

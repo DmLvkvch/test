@@ -2,7 +2,25 @@
 #define MESSAGE_H
 
 #include "iface.h"
-#include "enumtype.h"
+
+#include <QString>
+#include <QList>
+#include <QDateTime>
+
+
+
+namespace MessagePriority {
+    enum Values
+    {
+        Unknown, Low, Medium, High
+    };
+}
+namespace  MessageStatus {
+    enum Values
+    {
+        Unknown, Recieved, Viewed
+    };
+}
 
 
 class Message
@@ -10,12 +28,13 @@ class Message
 public:
     Message();
 private:
-    IFace *receiver;
-    IFace* sender;
-    MsgStatus status;
-    long id;
-    long priority;
-    QString data = "21312312";
+        unsigned long id;
+        QString reciever;
+        QString sender;
+        MessageStatus::Values status;
+        QDateTime timestamp;
+        MessagePriority::Values priority;
+        QString type;
+        QString data;
 };
-
 #endif // MESSAGE_H

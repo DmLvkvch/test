@@ -21,6 +21,8 @@ SOURCES += \
     logswidget.cpp \
     main.cpp \
     mainwindow.cpp \
+    mainwindowsettings.cpp \
+    mainwindowsettingsgrid.cpp \
     message.cpp \
     pluginiface.cpp \
     pluginwidget.cpp \
@@ -28,11 +30,12 @@ SOURCES += \
     settingswidget.cpp
 
 HEADERS += \
-    enumtype.h \
     iface.h \
     logs.h \
     logswidget.h \
     mainwindow.h \
+    mainwindowsettings.h \
+    mainwindowsettingsgrid.h \
     message.h \
     pluginiface.h \
     pluginwidget.h \

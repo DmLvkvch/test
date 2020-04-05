@@ -11,14 +11,15 @@ class SettingsWidget: public QWidget
 public:
     SettingsWidget(QList<IFace*> & ifaces);
     void paintEvent(QPaintEvent * e);
+private slots:
+    void saveSettings();
+    void cancelSettings();
 private:
     QPushButton* saveButton;
     QPushButton* cancelButton;
     void init();
     QList<IFace*> ifaces;
     PluginWidget* plugin;
-    void saveSettings();
-    void cancelSettings();
 };
 
 #endif // SETTINGSWIDGET_H

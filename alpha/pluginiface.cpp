@@ -11,3 +11,10 @@ QList<IFace*> & PluginIFace::getConnectedIFaces(){
     tmp->push_back(new IFace());
     return *tmp;
 }
+
+
+QList<Message> & PluginIFace::getMessageList(){
+    QList<Message>* l = new QList<Message>();
+    l->push_back(Message());
+    return *l;
+}

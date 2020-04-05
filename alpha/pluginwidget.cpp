@@ -9,10 +9,10 @@
 #include <QStyleOption>
 #include <iostream>
 
-PluginWidget::PluginWidget(QString name, QWidget* parent):QWidget(parent)
+PluginWidget::PluginWidget(PluginIFace* plugin,QString name, QWidget* parent):QWidget(parent)
 {
 
-    this->plugin = new PluginIFace();
+    this->plugin = plugin;
     this->widgetName = name;
     this->setWindowTitle(this->widgetName);
     grid = new QGridLayout();
@@ -29,21 +29,25 @@ PluginWidget::PluginWidget(QString name, QWidget* parent):QWidget(parent)
     QObject::connect(openLogsButton, SIGNAL(clicked()), this, SLOT(openLogsButton_clicked()));
 }
 
-PluginWidget::~PluginWidget(){
+PluginWidget::~PluginWidget()
+{
 
 }
 
-void PluginWidget::openLogsButton_clicked(){
-    LogsWidget *logs = new LogsWidget(this->plugin->getConnectedIFaces());
+void PluginWidget::openLogsButton_clicked()
+{
+    LogsWidget *logs = new LogsWidget(this->plugin->getMessageList());
     logs->show();
 }
 
-void PluginWidget::openSettingsButton_clicked(){
+void PluginWidget::openSettingsButton_clicked()
+{
     SettingsWidget *settings = new SettingsWidget(this->plugin->getConnectedIFaces());
     settings->show();
 }
 
-void PluginWidget::initIFaces(){
+void PluginWidget::initIFaces()
+{
     QLabel *l;
     QVBoxLayout *indicators = new QVBoxLayout;
     for(int i = 0;i<this->plugin->getConnectedIFaces().size();i++){

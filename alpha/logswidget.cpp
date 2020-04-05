@@ -5,20 +5,22 @@
 #include <QSizePolicy>
 #include <QStyleOption>
 #include <QHeaderView>
-LogsWidget::LogsWidget(QList<IFace*> & ifaces)
+
+LogsWidget::LogsWidget(QList<Message> & listOfMessages)
 {
     this->setWindowTitle("Logs");
-    this->ifaces = ifaces;
+    this->listOfMessages = listOfMessages;
     init();
 }
 
-void LogsWidget::init(){
+void LogsWidget::init()
+{
     QGridLayout *grid = new QGridLayout(this);
     setLayout(grid);
     this->table = new QTableWidget(this);
     this->table->setMinimumSize(this->width(), this->height());
-    this->table->setColumnCount(6);
-    this->table->setHorizontalHeaderLabels(QStringList()<<"N"<<"Time"<<"sender"<<"receiver"<<"status"<<"id");
+    this->table->setColumnCount(7);
+    this->table->setHorizontalHeaderLabels(QStringList()<<"N"<<"Time"<<"sender"<<"receiver"<<"status"<<"id"<<"data");
     grid->addWidget(this->table, 0, 0);
     QHeaderView* w = this->table->horizontalHeader();
     w->setSectionResizeMode(QHeaderView::Stretch);

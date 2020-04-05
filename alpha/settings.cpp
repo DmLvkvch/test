@@ -1,15 +1,9 @@
 #include "settings.h"
 
-Settings::Settings()
-{
-    this->ip = "255.255.255.255";
-    this->port = 0;
+QVariant Settings::getValue(){
+    return value;
 }
 
-QString Settings::getIp(){
-    return this->ip;
-}
-
-int Settings::getPort(){
-    return this->port;
+QString Settings::getName(){
+    return this->name;
 }

@@ -17,7 +17,7 @@ public:
     QList<IFace*> & getConnectedIFaces();
     QString getVersion();
     void reset();
-    QList<Message> & getMessageList() const;
+    QList<Message> & getMessageList();
     QList<Settings> & getSettings() const;
     void setSettings(QList<Settings> & settings);
 };
