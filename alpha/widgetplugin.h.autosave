@@ -1,0 +1,32 @@
+#ifndef WIDGETPLUGIN_H
+#define WIDGETPLUGIN_H
+
+#include "iface.h"
+#include "pluginiface.h"
+
+#include <QPushButton>
+#include <QWidget>
+
+
+class WidgetPlugin : public QWidget
+{
+    Q_OBJECT
+
+public:
+    WidgetPlugin(QString name, QWidget *parent = nullptr);
+    void paintEvent(QPaintEvent *event);
+    virtual  ~WidgetPlugin();
+
+private slots:
+    void open_in_new_window();
+    void openLogsButton_clicked();
+    void openSettingsButton_clicked();
+private:
+    PluginIFace plugin;
+    QString widgetName;
+    QWidget* parentWidget;
+    QPushButton* openLogsButton;
+    QPushButton* openSettingsButton;
+    QList<IFace*> connectedIFaces;
+};
+#endif // WIDGETPLUGIN_H
