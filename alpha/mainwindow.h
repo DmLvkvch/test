@@ -1,10 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "mainwindowsettings.h"
-#include "pluginwidget.h"
-
-#include <QComboBox>
+class MainWindowSettings;
+class PluginWidget;
 #include <QMainWindow>
 #include <QVBoxLayout>
 
@@ -21,6 +19,8 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    QSharedPointer<QGridLayout> widgetsLayout();
+    QList<PluginWidget> pluginsList();
 private:
     QSharedPointer<QGridLayout> _widgetsLayout;
     QSharedPointer<QWidget> _widget;
@@ -30,7 +30,7 @@ private:
     QList<PluginWidget> _pluginsList;
     Ui::MainWindow *ui;
 private slots:
-    void handleSettings();
-    void handleLoadNewPlugin();
+    void handleSettings(); ///<слот об открытии окна с настройками плагина
+    void handleLoadNewPlugin(); ///<слот об открытии окна с дял загрузки нового плагина
 };
 #endif // MAINWINDOW_H

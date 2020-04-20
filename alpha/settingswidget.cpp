@@ -1,5 +1,7 @@
-#include "settingswidget.h"
 
+#include "settingswidget.h"
+#include "settingsitem.h"
+#include "connectioniface.h"
 #include <QLabel>
 #include <QLineEdit>
 #include <QPainter>
@@ -8,27 +10,24 @@
 #include <QVBoxLayout>
 #include <iostream>
 
-SettingsWidget::SettingsWidget(){
 
-}
-
-SettingsWidget::SettingsWidget(QList<QSharedPointer<ConnectionIFace>> ifaces): QWidget(nullptr)
+SettingsWidget::SettingsWidget(QList<QSharedPointer<ConnectionIFace>> & ifaces): QWidget(nullptr)
 {
-    this->ifaces = ifaces;
+    this->_ifaces = ifaces;
     this->setWindowTitle("Settings");
-    saveButton = QSharedPointer<QPushButton>( new QPushButton());
-    saveButton->setText("save");
-    cancelButton = QSharedPointer<QPushButton>(new QPushButton());
-    cancelButton->setText("cancel");
-    layout = QSharedPointer<QVBoxLayout>(new QVBoxLayout);
-    buttonsLayout = QSharedPointer<QHBoxLayout>(new QHBoxLayout);
-    buttonsLayout->addWidget(saveButton.get());
-    buttonsLayout->addWidget(cancelButton.get());
-    layout->addLayout(buttonsLayout.get());
-    setLayout(layout.get());
-    QObject::connect(cancelButton.get(), SIGNAL(clicked()), this, SLOT(cancelSettings()));
-
+    _saveButton = QSharedPointer<QPushButton>( new QPushButton());
+    _saveButton->setText("save");
+    _cancelButton = QSharedPointer<QPushButton>(new QPushButton());
+    _cancelButton->setText("cancel");
+    _layout = QSharedPointer<QVBoxLayout>(new QVBoxLayout());
+    _buttonsLayout = QSharedPointer<QHBoxLayout>(new QHBoxLayout());
+    setLayout(_layout.get());
+    _buttonsLayout->addWidget(_saveButton.get());
+    _buttonsLayout->addWidget(_cancelButton.get());
     init();
+    _layout->addLayout(_buttonsLayout.get());
+    QObject::connect(_cancelButton.get(), SIGNAL(clicked()), this, SLOT(cancelSettings()));
+
 }
 
 SettingsWidget::~SettingsWidget()
@@ -38,10 +37,23 @@ SettingsWidget::~SettingsWidget()
 
 void SettingsWidget::init()
 {
-    foreach (auto &iface, ifaces) {
-        foreach (auto& setting, iface->settings()) {
-            std::cout<<setting.name.toStdString();
+    foreach (auto &iface, _ifaces)
+    {
+        QVBoxLayout* vbl = new QVBoxLayout;
+        QLabel* name = new QLabel;
+        name->setText(iface->name());
+        vbl->addWidget(name);
+        foreach (auto& setting, iface->settings())
+        {
+            QLabel* lb = new QLabel;
+            lb->setText(setting.name);
+            vbl->addWidget(lb);
+            QLineEdit* le = new QLineEdit;
+            if(setting.type==SettingsItem::Type::Ip)
+            le->setText(setting.value.toString());
+            vbl->addWidget(le);
         }
+         _layout->addLayout(vbl);
     }
 }
 

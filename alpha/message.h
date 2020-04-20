@@ -31,22 +31,26 @@ public:
     };
     Message();
     ~Message();
-    unsigned long getId() const;
-    QString getStatus() const;
-    QString getPriority() const;
-    QByteArray getData() const;
-    QDateTime getDate() const;
-    Format getFormat() const;
+    unsigned long id() const;///<получить id сообщения
+    QString status() const;///<получить статус сообщения
+    QString priority() const;///<получить приоритет сообщения
+    QByteArray data() const;///<получить время сообщения
+    QDateTime date() const;///<получить данных из сообщения
+    Format format() const;///<получить формат сообщения
+    QString caption() const;///<получить заголовок сообщения
+    QString description() const;///<получить описание сообщения
+    QString reciever() const;///<получить получателя сообщения
+    QString sender() const;///<получить отправителя сообщения
 private:
-    QString caption, description;
-    unsigned long id;
-    QString reciever;
-    QString sender;
-    MessageStatus::Values status;
-    QDateTime timestamp;
-    MessagePriority::Values priority;
-    QString type;
-    QByteArray data;
-    Format format;
+    QString _caption, _description;
+    unsigned long _id;
+    QString _reciever;
+    QString _sender;
+    MessageStatus::Values _status;
+    QDateTime _timestamp;
+    MessagePriority::Values _priority;
+    QString _type;
+    QByteArray _data;
+    Format _format;
 };
 #endif // MESSAGE_H

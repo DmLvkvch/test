@@ -1,15 +1,12 @@
 #include "logswidget.h"
-#include "plrealize.h"
 #include "pluginwidget.h"
 #include "settingswidget.h"
-
 #include <QGridLayout>
 #include <QLabel>
 #include <QPainter>
 #include <QPushButton>
 #include <QStyleOption>
-#include <iostream>
-
+#include "pluginiface.h"
 PluginWidget::PluginWidget(PluginIFace & plugin, QString name, QWidget* parent): _plugin(plugin), QWidget(parent)
 {
     _grid = QSharedPointer<QGridLayout>(new QGridLayout);
@@ -22,7 +19,6 @@ PluginWidget::PluginWidget(PluginIFace & plugin, QString name, QWidget* parent):
     _openSettingsButton->setText("Settings");
     _grid->addWidget(_openLogsButton.get(), 1, 0);
     _grid->addWidget(_openSettingsButton.get(), 1, 1);
-    QList<QSharedPointer<ConnectionIFace>> tmp = this->_plugin.connectedIFaces();
     this->_settings = QSharedPointer<SettingsWidget>(new SettingsWidget(this->_plugin.connectedIFaces()));
     QObject::connect(_openSettingsButton.get(), SIGNAL(clicked()), this, SLOT(handleOpenSettings()));
     QObject::connect(_openLogsButton.get(), SIGNAL(clicked()), this, SLOT(handleOpenLogs()));
@@ -47,7 +43,10 @@ void PluginWidget::handleOpenSettings()
 
 void PluginWidget::initIFaces()
 {
+    foreach(auto &iface, this->_plugin.connectedIFaces())
+    {
 
+    }
 }
 
 void PluginWidget::paintEvent(QPaintEvent * e)
@@ -56,6 +55,6 @@ void PluginWidget::paintEvent(QPaintEvent * e)
     QStyleOption opt;
     opt.init(this);
     QPainter p(this);
-     p.drawRoundedRect(0,5,width()-5, height()-7,3,3);
+    p.drawRoundedRect(0,5,width()-5, height()-7,3,3);
     style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
 }

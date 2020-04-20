@@ -1,11 +1,11 @@
 #include "logs.h"
-#include <iostream>
+
 Logs::Logs(QList<Message>& logs):logs(logs)
 {
     //this->logs = logs;
 }
 
-Message Logs::getMessage(int i){
+Message Logs::message(int i){
     return this->logs.at(i);
 }
 
@@ -23,7 +23,7 @@ void Logs::sort(int i)
 }
 
 bool Logs::srt(const Message & a, const Message & b){
-    return a.getId()<b.getId();
+    return a.id()<b.id();
 }
 
 void Logs::sortById(){

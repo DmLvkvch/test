@@ -1,13 +1,12 @@
 #include "connectioniface.h"
+#include "message.h"
+#include "settingsitem.h"
 
-ConnectionIFace::ConnectionIFace()
+ConnectionIFace::ConnectionIFace(QString _name, QList<SettingsItem> _settings)
 {
-
-}
-
-ConnectionIFace::ConnectionIFace(QString name)
-{
-
+    this->_name = _name;
+    this->_settings = _settings;
+    this->_status = ConnectionIFace::Status::Connected;
 }
 
 ConnectionIFace::~ConnectionIFace()
@@ -17,7 +16,7 @@ ConnectionIFace::~ConnectionIFace()
 
 QString ConnectionIFace::name() const
 {
-
+    return this->_name;
 }
 
 ConnectionIFace::Status ConnectionIFace::status() const

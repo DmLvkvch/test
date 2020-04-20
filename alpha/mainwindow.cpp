@@ -2,12 +2,13 @@
 #include "ui_mainwindow.h"
 #include "pluginwidget.h"
 #include "mainwindowsettings.h"
-#include "plrealize.h"
-#include "ifacerealize.h"
+#include "settingsitem.h"
 
 #include <QComboBox>
 #include <QFileDialog>
+#include <QLibrary>
 #include <QVBoxLayout>
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -28,23 +29,8 @@ MainWindow::MainWindow(QWidget *parent)
     _mnuBar->addMenu(_pmnu.get());
     setMenuBar(_mnuBar.get());
     setCentralWidget(_widget.get());
-    _settings = QSharedPointer<MainWindowSettings>(new MainWindowSettings);
-
-    PluginIFace* pl = new plrealize();
-
-    QList<SettingsItem> sets;
-    SettingsItem s;
-    sets.push_back(s);
-    sets.push_back(s);
-    sets.push_back(s);
-    sets.push_back(s);
-    ConnectionIFace *c = new ifacerealize;
-    c->setSettings(sets);
-    pl->addConnectionIFace(*c);
-    PluginWidget* pw = new PluginWidget(*pl, QString("21312"), this);
+    _settings = QSharedPointer<MainWindowSettings>(new MainWindowSettings(this));
     _widget->setLayout(_widgetsLayout.get());
-    _widgetsLayout->addWidget(pw, 0, 0);
-    _widgetsLayout->addWidget(new PluginWidget(*pl, "2131244444", this), 0, 1);
 }
 
 void MainWindow::handleSettings()
@@ -55,7 +41,33 @@ void MainWindow::handleSettings()
 void MainWindow::handleLoadNewPlugin()
 {
     QString fileName = QFileDialog::getOpenFileName(this, tr("File manager"), QString(),
-                    tr("Text Files (*.txt)"));
+                    tr("Files (*.dll *.so)"));
+    QLibrary lib;
+    QString path = fileName;
+    if(QLibrary::isLibrary(path)) {
+        lib.setFileName(path);
+        lib.load();
+        if(lib.isLoaded())
+            qDebug() << "Ok\n";
+        else
+            qDebug() << "Error " << lib.errorString() << "\n";
+    } else
+        qDebug() << "Not a library\n";
+
+    qDebug()<<lib.fileName();
+    typedef PluginIFace *(*createPlugin)();
+    createPlugin cwf = (createPlugin)lib.resolve("create");
+        if (cwf) {
+            PluginIFace *plugin = cwf();
+            if (plugin) {
+               PluginWidget* pw = new PluginWidget(*plugin, QString("21312"), this);
+               _widgetsLayout->addWidget(pw);
+            }
+        }
+        else
+        {
+            qDebug() << "Could not show widget from the loaded library";
+        }
 }
 
 MainWindow::~MainWindow()

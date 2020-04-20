@@ -5,7 +5,7 @@
 #include <QSizePolicy>
 #include <QStyleOption>
 #include <QHeaderView>
-#include <string>
+#include <iostream>
 LogsWidget::LogsWidget(Logs* logs)
 {
     this->setWindowTitle("Logs");
@@ -38,10 +38,10 @@ void LogsWidget::fillTable(){
     for (int i = 0;i<logs->size();i++)
     {
         this->table->setItem(i, 0, new QTableWidgetItem(QString::number(i+1)));
-        this->table->setItem(i, 1, new QTableWidgetItem(logs->getMessage(i).getDate().toString()));
-        this->table->setItem(i, 4, new QTableWidgetItem(logs->getMessage(i).getStatus()));
-        this->table->setItem(i, 5, new QTableWidgetItem(logs->getMessage(i).getPriority()));
-        this->table->setItem(i, 6, new QTableWidgetItem(QString::number(logs->getMessage(i).getId())));
+        this->table->setItem(i, 1, new QTableWidgetItem(logs->message(i).date().toString()));
+        this->table->setItem(i, 4, new QTableWidgetItem(logs->message(i).status()));
+        this->table->setItem(i, 5, new QTableWidgetItem(logs->message(i).priority()));
+        this->table->setItem(i, 6, new QTableWidgetItem(QString::number(logs->message(i).id())));
     }
 }
 

@@ -3,7 +3,7 @@
 
 #include "connectioniface.h"
 #include "logs.h"
-#include "pluginwidget.h"
+#include <QGridLayout>
 #include <QTableWidget>
 #include <QWidget>
 

@@ -7,17 +7,26 @@
 /*!
  *  class defining settings structure
  */
-struct SettingsItem
+class SettingsItem
 {
+public:
     enum class Type
     {
         Unknown, Int, Double, Float, String, Ip, List, Bool
     };
-
+    /*!
+      * \brief Конструктор объекта класса SettingsItem
+      * инициализирует все поля
+      * значениями по-умолчанию
+      */
     SettingsItem();
-    SettingsItem(QString name,QVariant value, Type type, double min, double max, double step);
+    /*!
+      * \brief Конструктор объекта класса SettingsItem
+      * инициализирует все значения переданными параметрами
+      */
+    SettingsItem(QString name,QVariant value, Type type, double min, double max, double step, int precision);
 
-    int _precision;
+    int precision;
     QVariantList listItems;
     QString     name;///<имя настройки
     QVariant    value;///<значение настройки

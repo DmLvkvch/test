@@ -1,7 +1,8 @@
 #ifndef PluginWidget_H
 #define PluginWidget_H
-#include "pluginiface.h"
-#include "settingswidget.h"
+
+class PluginIFace;
+class SettingsWidget;
 #include <QGridLayout>
 #include <QPushButton>
 #include <QWidget>
@@ -15,7 +16,7 @@ class PluginWidget : public QWidget
 
 public:
     PluginWidget(PluginIFace & plugin, QString name, QWidget *parent = nullptr);
-    void paintEvent(QPaintEvent *event);
+    void paintEvent(QPaintEvent *event);///<метод для отображения виджета
     virtual  ~PluginWidget();
 private slots:
     void handleOpenLogs();

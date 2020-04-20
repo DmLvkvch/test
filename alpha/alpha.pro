@@ -17,7 +17,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     connectioniface.cpp \
-    ifacerealize.cpp \
     logs.cpp \
     logswidget.cpp \
     main.cpp \
@@ -25,22 +24,18 @@ SOURCES += \
     mainwindowsettings.cpp \
     mainwindowsettingsgrid.cpp \
     message.cpp \
-    plrealize.cpp \
     pluginiface.cpp \
     pluginwidget.cpp \
     settingsitem.cpp \
     settingswidget.cpp
-
 HEADERS += \
     connectioniface.h \
-    ifacerealize.h \
     logs.h \
     logswidget.h \
     mainwindow.h \
     mainwindowsettings.h \
     mainwindowsettingsgrid.h \
     message.h \
-    plrealize.h \
     pluginiface.h \
     pluginwidget.h \
     settingsitem.h \

@@ -2,18 +2,18 @@
 #include <string>
 Message::Message()
 {
-    this->id = rand()%10;
+    this->_id = rand()%10;
 
-    this->status = MessageStatus::Values::Recieved;
-    this->priority = MessagePriority::Values::High;
-    this->timestamp = QDateTime::currentDateTime();
+    this->_status = MessageStatus::Values::Recieved;
+    this->_priority = MessagePriority::Values::High;
+    this->_timestamp = QDateTime::currentDateTime();
 }
 
-unsigned long Message::getId() const{
-    return id;
+unsigned long Message::id() const{
+    return _id;
 }
-QString Message::getStatus() const{
-    switch (this->status) {
+QString Message::status() const{
+    switch (this->_status) {
     case MessageStatus::Values::Recieved:
         return "received";
     case MessageStatus::Values::Viewed:
@@ -23,8 +23,8 @@ QString Message::getStatus() const{
     }
     return "";
 }
-QString Message::getPriority() const{
-    switch (this->priority) {
+QString Message::priority() const{
+    switch (this->_priority) {
     case MessagePriority::Values::High:
         return "high";
     case MessagePriority::Values::Medium:
@@ -37,8 +37,8 @@ QString Message::getPriority() const{
     return "";
 }
 
-QDateTime Message::getDate() const{
-    return this->timestamp;
+QDateTime Message::date() const{
+    return this->_timestamp;
 }
 
 Message::~Message()

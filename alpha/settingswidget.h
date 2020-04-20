@@ -1,7 +1,8 @@
 #ifndef SETTINGSWIDGET_H
 #define SETTINGSWIDGET_H
 
-#include "connectioniface.h"
+
+class ConnectionIFace;
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <QWidget>
@@ -13,20 +14,23 @@ class SettingsWidget: public QWidget
 {
     Q_OBJECT
 public:
-    SettingsWidget(QList<QSharedPointer<ConnectionIFace>> ifaces);
+    /*!
+      * \brief Конструктор объекта класса SettingsWidget
+      * принимает на вход список интерфейсов
+      */
+    SettingsWidget(QList<QSharedPointer<ConnectionIFace>> & ifaces);
     void paintEvent(QPaintEvent * e);
     ~SettingsWidget();
-    SettingsWidget();
 private slots:
-    void saveSettings();
-    void cancelSettings();
+    void saveSettings();///<сохранение настроек
+    void cancelSettings();///<отмена введенных настроек
 private:
     void init();
-    QSharedPointer<QVBoxLayout>layout;
-    QSharedPointer<QHBoxLayout> buttonsLayout;
-    QSharedPointer<QPushButton> saveButton;
-    QSharedPointer<QPushButton> cancelButton;
-    QList<QSharedPointer<ConnectionIFace>> ifaces;
+    QSharedPointer<QVBoxLayout> _layout;
+    QSharedPointer<QHBoxLayout> _buttonsLayout;
+    QSharedPointer<QPushButton> _saveButton;
+    QSharedPointer<QPushButton> _cancelButton;
+    QList<QSharedPointer<ConnectionIFace>> _ifaces;
 };
 
 #endif // SETTINGSWIDGET_H

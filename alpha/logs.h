@@ -9,7 +9,7 @@ class Logs
 {
 public:
     Logs(QList<Message> & logs);
-    Message getMessage(int i);
+    Message message(int i);
     ~Logs();
     void sortByN();
     void sortById();
